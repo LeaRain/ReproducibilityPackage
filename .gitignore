@@ -1,2 +1,11 @@
+*.aux
+*.bcf
+*.log
+*.out
+*.xml
+*.bbl
+*.blg
+*-blx.bib
+
 venv/
 .idea/
