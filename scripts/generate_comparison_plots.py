@@ -5,6 +5,14 @@ import matplotlib.lines as mlines
 import matplotlib as mpl
 from matplotlib.ticker import AutoMinorLocator
 
+mpl.use("pgf")
+mpl.rcParams.update({
+    "pgf.texsystem": "lualatex",
+    'font.family': 'serif',
+    'text.usetex': True,
+    'pgf.rcfonts': False,
+})
+
 # Define global parameters for further usage
 data = pd.DataFrame(columns=["step", "value", "structure", "extraction", "encoding", "run"])
 run_count = 1
@@ -120,7 +128,8 @@ def plot_data():
 
     figure.supxlabel("Steps")
     figure.supylabel("Validation Return")
-    plt.show()
+    figure.set_size_inches(w=11, h=6)
+    plt.savefig("comparison.pgf")
 
 
 def plot_data_for_structure_and_extraction(structure, extraction, ax):
