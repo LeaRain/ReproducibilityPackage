@@ -1,3 +1,4 @@
+import sys
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -129,7 +130,7 @@ def plot_data():
     figure.supxlabel("Steps")
     figure.supylabel("Validation Return")
     figure.set_size_inches(w=6, h=5)
-    plt.savefig("../comparison.pgf")
+    plt.savefig("comparison.pgf")
 
 
 def plot_data_for_structure_and_extraction(structure, extraction, ax):
@@ -176,5 +177,8 @@ def extract_encoding_data(extraction_data, encoding):
 
 
 if __name__ == '__main__':
-    read_csv_data("../data")
+    if len(sys.argv) != 2:
+        exit("Usage: python generate_comparison_plots.py <path_to_csv_data>")
+
+    read_csv_data(sys.argv[1])
     plot_data()
