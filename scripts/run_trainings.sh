@@ -18,7 +18,7 @@ cd ../quantum-rl
 # cleaning up prior skolik or lockwood runs, but not both
 rm -r -f logs/tfq.reproduction."$1".*
 rm -r -f ../plot_rl_vqc_data/quantum-rl/logs/tfq.reproduction."$1".*
-
+rm -r -f ../ReproducibilityPackage/data/tfq.reproduction."$1".*
 
 configStringStart=tfq.reproduction."$1".cartpole.skolik_hyper
 if [ "$1" = "skolik" ]; then
@@ -41,9 +41,11 @@ printf "\n\n\nfinished the trainings, now converting to .csv files ...\n"
 cd ../plot_rl_vqc_data
 
 # convert all freshly generated training results to .csv files
-for directory in ../quantum-rl/logs/tfq.reproduction."$1".*; do
-    printf "\n\n\ngenerating .csv files for directory "$directory" ...\n\n\n\n"
-    python3 get_csv.py "$directory" parent
-done
+printf "\n\n\ngenerating .csv files from data ...\n\n\n\n"
+python3 get_csv.py ../quantum-rl/logs/ parent
+
+# copy the .csv files into our data folder
+cd ../ReproducibilityPackage
+cp ../plot_rl_vqc_data/quantum-rl/logs/tfq.reproduction."$1".* data/
 
 printf "\n\n\nfinished all "$1" trainings.\n\n\n\n"
