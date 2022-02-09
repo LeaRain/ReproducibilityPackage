@@ -1,12 +1,14 @@
 \documentclass[conference]{IEEEtran}
-\bibliography{references.bib}
 
 \usepackage{booktabs}
-\usepackage[english, german]{babel}
-\usepackage[natbib=true,backend=bibtex,style=ieee]{biblatex}
+\usepackage[english]{babel}
+\usepackage[natbib=true,backend=bibtex,style=ieee-alphabetic]{biblatex}
 \usepackage{graphicx}
 \usepackage{pdfpages}
 \usepackage{hyperref}
+\usepackage[nolist]{acronym}
+
+\addbibresource{references.bib}
 
 \title{Reproducibility Package -- Reproducibility Engineering: Quantum Reinforcement Learning}
 
@@ -16,10 +18,20 @@
 
 \begin{document}
 
+\begin{acronym}
+	\acro{VQ-DQN}{variational quantum deep Q-Networks}
+\end{acronym}
 
 \maketitle
 
 \section{Introduction}
+Reproducibility is one key factor in conducting scientific research for (dis)proving new theories. 
+For example Karl Popper as one major scientific philosophers describes repititions for scientific obversations as necessary to convince oneself that one is not confronted with a random coincidence.\autocite{popper} 
+In contrast to this idea of philosophy of science, there is the apprehension of a reproducibilty crisis in science, shared for instance in surveys by one of the most popular research magazines. 
+A majority of the participated 1576 researchers sees a reproducibility crisis and has failed to reproduce the experiments of other scientists.\autocite{crisis}
+
+To make a contribution in the meaning of reproducibility, this paper documents the approach of reproducing current research about reinforcement learning in quantum compting with \ac{VQ-DQN} by Franz et al.\autocite{instabilities}
+
 
 \section{Research: Uncovering Instabilities in Variational-Quantum Deep Q-Networks}
 
