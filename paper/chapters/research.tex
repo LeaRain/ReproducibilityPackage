@@ -1,0 +1,13 @@
+The given research project includes a general approach for analzying the potential of quantum computing for the usage in problems of deep \ac{RL}. 
+\ac{RL} is one field in Machine Learning with the general idea to train an agent without further instructions, so the agent has to find out which actions result in the highest reward. 
+The training information evaluates the actions instead of using instructions for (in)correct actions.
+Popular examples of \ac{RL} include the training of agents for videogames like the Game of Go.\autocite{rl}
+Deep \ac{RL} approaches have hardware intense requirements for achieving and outperforming human benchmarks like described by Badia et al. for exceeding the human benchmark in Atari games.\autocite{atari}
+
+
+At this point, quantum computing with its computational speedup potentials comes in.
+Examples for such speedups can be found in quantum mechanical algorithms for database search\autocite{databasesearch}. 
+
+
+The proposed strategy for this research is the usage of \ac{VQ-DQN} described by Chen et al. so classical deep \ac{RL} algorithms for von Neumann architectures have a quantum computing representation.\ac{vqdqn},
+For this purpose, variational quantum circuits are used to create a quantum equivalent of deep Q-learning.%TODO: reference for deep q learning and explanation
