@@ -5,14 +5,20 @@ Popular examples of \ac{RL} include the training of agents for videogames like t
 Deep \ac{RL} approaches have hardware intense requirements for achieving and outperforming human benchmarks like described by Badia et al. for exceeding the human benchmark in Atari games.\autocite{atari}
 
 
-At this point, quantum computing with its computational speedup potentials comes in.
-Examples for such speedups can be found in quantum mechanical algorithms for database search\autocite{databasesearch}. 
+At this point, quantum computing with its computational speedup potentials comes in, for example in quantum mechanical algorithms for database search\autocite{databasesearch}. 
 
 
 The proposed strategy for this research is the usage of \ac{VQ-DQN} described by Chen et al. so classical deep \ac{RL} algorithms for von Neumann architectures have a quantum computing representation.\autocite{vqdqn},
 For this purpose, variational quantum circuits are used to create a quantum equivalent of deep Q-learning.
 Q-learning in general follows the idea to approximate directly the optimal action-value function based on the learned action-value function instead of using a strict policy.\autocite{rl}
 The main difference between classical deep Q-networks and quantum deep Q-networks lies in the replacement of the deep neural network by variational quantum circuits.
-Those variational quantum circuits follow a design of a fixed structure of gates, operating on a set of qubits as fundamental unit in the realm of quantum computing.\autocite{circuits}
+Those variational quantum circuits follow a design of a fixed structure of gates, operating on a set of qubits.\autocite{circuits}
 
 
+For the usage of \ac{VQ-DQN}, it is necessary to map a state of the classical markov deciscion process to a quantum state. 
+Lockwood and Si use Scaled encoding and Directional encoding.\autocite{lockwood}
+Skolik et al. add Continous encoding to those possibilities.\autocite{skolik}
+
+
+Based on the research and reproduction study of Franz et al.\autocite{instabilities}, we reconstruct the reproduced training process of Lockwood and Si\autocite{lockwood} and Skolik et al.\autocite{skolik} regarding the training of \ac{VQ-DQN} agents on the CartPole-v1 task. 
+We use the approaches of Continuous, Scaled \& Continuous and Scaled \& Directional encoding and the Q-value extraction methods Local Scaling, Global Scaling and Global Scaling with Quantum Pooling like descirbed by Franz et al.\autocite{instabilities}.
