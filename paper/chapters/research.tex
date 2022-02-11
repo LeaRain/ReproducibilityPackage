@@ -1,17 +1,17 @@
-The given research project includes a general approach for analzying the potential of quantum computing for the usage in problems of deep \ac{RL}. 
-\ac{RL} is one field in Machine Learning with the general idea to train an agent without further instructions, so the agent has to find out which actions and general policies result in the highest reward. 
-The training information evaluates the actions instead of using instructions for (in)correct actions.
-Popular examples of \ac{RL} include the training of agents for videogames like the Game of Go.\autocite{rl}
-Deep \ac{RL} approaches have hardware intense requirements for achieving and outperforming human benchmarks like described by Badia et al. for exceeding the human benchmark in Atari games.\autocite{atari}
-
-
+The given research project studies the usage of hybrid quantum-classical deep \ac{RL} algorithms and occuring instabilities in their usage.
+\ac{RL} is one field in machine learning.
+The main idea is to train an agent without further instructions, so the agent has to find out which actions and general policies result in the highest reward.
+One sub class of \ac{RL} is Q-learning, following the idea of approximating directly the optimal action-value function based on the learned action-value function.\autocite{rl}
 At this point, quantum computing with its computational speedup potentials comes in, for example in quantum mechanical algorithms for database search\autocite{databasesearch}. 
+
+% TODO: use in repro.tex for describing choice of split up of one click dispatcher
+% Deep \ac{RL} approaches have hardware intense requirements for achieving and outperforming human benchmarks like described by Badia et al. for exceeding the human benchmark in Atari games.\autocite{atari}
 
 
 The proposed strategy for this research is the usage of \ac{VQ-DQN} described by Chen et al. so classical deep \ac{RL} algorithms for von Neumann architectures have a quantum computing representation.\autocite{vqdqn},
 For this purpose, variational quantum circuits are used to create a quantum equivalent of deep Q-learning.
-Q-learning in general follows the idea to approximate directly the optimal action-value function based on the learned action-value function instead of using a strict policy.\autocite{rl}
-The main difference between classical deep Q-networks and quantum deep Q-networks lies in the replacement of the deep neural network by variational quantum circuits.
+Q-learning follows the idea autocite{rl}
+Quantum deep Q-networks replace the classical neural network with variational quantum circuits.
 Those variational quantum circuits follow a design of a fixed structure of gates, operating on a set of qubits.\autocite{circuits}
 
 
