@@ -10,15 +10,16 @@ At this point, quantum computing with its computational speedup potentials comes
 
 The proposed strategy for this research is the usage of \ac{VQ-DQN} described by Chen et al. so classical deep \ac{RL} algorithms for von Neumann architectures have a quantum computing representation.\autocite{vqdqn},
 For this purpose, variational quantum circuits are used to create a quantum equivalent of deep Q-learning.
-Q-learning follows the idea autocite{rl}
 Quantum deep Q-networks replace the classical neural network with variational quantum circuits.
-Those variational quantum circuits follow a design of a fixed structure of gates, operating on a set of qubits.\autocite{circuits}
+Those circuits follow a design of a fixed structure of gates, operating on a set of qubits.\autocite{circuits}
 
 
-For the usage of \ac{VQ-DQN}, it is necessary to map a state of the classical markov deciscion process to a quantum state. 
+For the usage of \ac{VQ-DQN}, it is necessary to map a state of the classical markov deciscion process to a quantum state by the usage of the qubits in the variational quantum circuit. 
 Lockwood and Si use Scaled encoding and Directional encoding.\autocite{lockwood}
-Skolik et al. add Continous encoding to those possibilities.\autocite{skolik}
+Skolik et al. add Continous encoding to those possibilities.\autocite{skolik} 
+The different encoding strategies describe different rotation policies for the specific qubits.
 
 
-Based on the research and reproduction study of Franz et al.\autocite{instabilities}, we reconstruct the reproduced training process of Lockwood and Si\autocite{lockwood} and Skolik et al.\autocite{skolik} regarding the training of \ac{VQ-DQN} agents on the CartPole-v1 task. 
-We use the approaches of Continuous, Scaled \& Continuous and Scaled \& Directional encoding and the Q-value extraction methods Local Scaling, Global Scaling and Global Scaling with Quantum Pooling like descirbed by Franz et al.\autocite{instabilities}.
+Based on the research and reproduction study of Franz et al.\autocite{instabilities}, we reconstruct the reproduced training process of Lockwood and Si\autocite{lockwood} and Skolik et al.\autocite{skolik} regarding the training of \ac{VQ-DQN} agents on the CartPole task. 
+We use the approaches of Continuous (continuous for all input parameters), Scaled \& Continuous (scaled for finite-domain input parameters, continuous for rest) and Scaled \& Directional (scaled for finite-domain input parameters, directional for rest) encoding. 
+For the Q-value extraction methods, we use Local Scaling (scaling of the output by a dedicated trainable weight), Global Scaling (scaling of all outputs by one trainable weight) and Global Scaling with Quantum Pooling (quantum pooling with following global scaling) like descirbed by Franz et al.\autocite{instabilities}.
