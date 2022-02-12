@@ -22,4 +22,17 @@ The different encoding strategies describe different rotation policies for the s
 
 Based on the research and reproduction study of Franz et al.\autocite{instabilities}, we reconstruct the reproduced training process of Lockwood and Si\autocite{lockwood} and Skolik et al.\autocite{skolik} regarding the training of \ac{VQ-DQN} agents on the CartPole task. 
 We use the approaches of Continuous (continuous for all input parameters), Scaled \& Continuous (scaled for finite-domain input parameters, continuous for rest) and Scaled \& Directional (scaled for finite-domain input parameters, directional for rest) encoding. 
-For the Q-value extraction methods, we use Local Scaling (scaling of the output by a dedicated trainable weight), Global Scaling (scaling of all outputs by one trainable weight) and Global Scaling with Quantum Pooling (quantum pooling with following global scaling) like descirbed by Franz et al.\autocite{instabilities}.
+For the Q-value extraction methods, we use Local Scaling (scaling of the output by a dedicated trainable weight), Global Scaling (scaling of all outputs by one trainable weight) and Global Scaling with Quantum Pooling (quantum pooling with following global scaling) like descirbed by Franz et al.\autocite{instabilities}
+The results can be found in Figure \ref{results}: For every extraction strategy every coding is used for five runs each.
+The validation return is averaged over those five runs.
+
+\begin{figure*}[tb]
+\centering
+	\scalebox{.65}{\input{comparison.pgf}}
+	\caption{Returns of the validation process (averaged over five runs each)  with the usage of \ac{VQ-DQN} described reproduced by Franz et al.\autocite{instabilities}, originally used by Lockwood and Si\autocite{lockwood} and Skolik et al.\autocite{skolik} with the corresponding extraction strategy.}
+\label{results}
+\end{figure*}
+
+The result of the reproducibility experiments of Franz et al. show instabilities in every run, independent of the structure, encoding and extraction method. 
+So it is not a surprise that we are not able to reproduce the exact same results, which also applies to the original results.
+In fact, we reproduce that we cannot reproduce the same results, which is also the observation of Franz et al. 
