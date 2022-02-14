@@ -48,7 +48,14 @@ RUN apt-get update && \
     apt-get install -y \
         build-essential \
         r-base \
+        texlive \
+        texlive-bibtex-extra \
         texlive-latex-base \
+        texlive-latex-extra \
+        texlive-latex-recommended \
+        texlive-luatex \
+        texlive-pictures \
+        texlive-publishers \
         libcurl4-gnutls-dev \
         libssl-dev \
         libxml2-dev
@@ -83,8 +90,3 @@ USER repro
 # default to run all trainings and then generate everything
 CMD ["./run_all_generate_all"]
 
-
-
-# --------------------------------------------------------------------------------
-
-# TODO: install other stuff that we need, like lualatex
