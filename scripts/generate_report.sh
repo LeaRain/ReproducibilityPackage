@@ -5,4 +5,13 @@ if [ "${PWD##*/}" = "scripts" ]; then
     cd ..
 fi
 
-echo "TODO: generate report via LaTeX"
+cd paper/
+
+lualatex main.tex
+bibtex main
+lualatex main.tex
+lualatex main.tex
+
+mv main.pdf ../report.pdf
+
+cd ..
