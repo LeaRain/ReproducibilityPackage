@@ -42,7 +42,7 @@ RUN git clone https://github.com/lfd/quantum-rl.git
 RUN python -m pip install --upgrade pip
 RUN pip3 install -r quantum-rl/requirements.txt
 
-# install R and R-packages for plotting
+# install R and R-packages for plotting, as well as LaTeX packages
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y \
