@@ -8,5 +8,6 @@ fi
 cd scripts
 
 python generate_comparison_plots.py ../data
+mv comparison.pgf ../paper/
 
 cd ..
