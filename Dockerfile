@@ -4,9 +4,6 @@
 #   (see the references section of the report)
 # SPDX-License-Identifier: GPL-2.0
 
-# MAINTAINER will be deprecated, so let's use LABEL
-LABEL authors="Lea Laux <lea.laux@st.oth-regensburg.de>, Martin Meilinger <martin.meilinger@st.oth-regensburg.de>"
-
 ARG has_gpu=with-gpu
 # default with gpu
 
@@ -26,6 +23,10 @@ FROM tensorflow/tensorflow:2.4.1 AS version-base-without-gpu
 # --------------------------------------------------------------------------------
 # operations needed regardless of gpu presence
 FROM version-base-${has_gpu} AS base
+
+# MAINTAINER will be deprecated, so let's use LABEL
+LABEL authors="Lea Laux <lea.laux@st.oth-regensburg.de>, Martin Meilinger <martin.meilinger@st.oth-regensburg.de>"
+
 
 # add user
 RUN useradd -m -G sudo -s /bin/bash repro && echo "repro:repro" | chpasswd
