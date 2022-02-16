@@ -35,6 +35,22 @@ WORKDIR /home/repro
 # copy the files into the image/container
 COPY --chown=repro:repro . /home/repro/ReproducibilityPackage
 
+# install git for cloning quantum-rl and Python, as well as LaTeX packages
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+    apt-get install -y \
+        build-essential \       
+	git \
+	python \ 
+	texlive \
+        texlive-bibtex-extra \
+        texlive-latex-base \
+        texlive-latex-extra \
+        texlive-latex-recommended \
+        texlive-luatex \
+        texlive-pictures \
+        texlive-publishers
+
 # clone the repository of Franz et al.
 RUN git clone https://github.com/lfd/quantum-rl.git
 
@@ -42,44 +58,9 @@ RUN git clone https://github.com/lfd/quantum-rl.git
 RUN python -m pip install --upgrade pip
 RUN pip3 install -r quantum-rl/requirements.txt
 
-# install R and R-packages for plotting, as well as LaTeX packages
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && \
-    apt-get install -y \
-        build-essential \
-        r-base \
-        texlive \
-        texlive-bibtex-extra \
-        texlive-latex-base \
-        texlive-latex-extra \
-        texlive-latex-recommended \
-        texlive-luatex \
-        texlive-pictures \
-        texlive-publishers \
-        libcurl4-gnutls-dev \
-        libssl-dev \
-        libxml2-dev
-RUN R -e "install.packages('ggplot2')"
-RUN R -e "install.packages('tikzDevice')"
-RUN R -e "install.packages('devtools')"
 
-
-
-# --------------------------------------------------------------------------------
-# one more operation for gpu-based image
 FROM base AS final-with-gpu
-
-RUN R -e "devtools::install_github('teunbrand/ggh4x')"
-
-
-
-# --------------------------------------------------------------------------------
-# one more operation for cpu-based image
 FROM base AS final-without-gpu
-
-RUN R -e "devtools::install_version('ggh4x', '0.1.2.1')"
-
-
 
 # --------------------------------------------------------------------------------
 # final image
