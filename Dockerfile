@@ -70,5 +70,5 @@ FROM final-${has_gpu} AS final
 USER repro
 
 # default to run all trainings and then generate everything
-CMD ["./run_all_generate_all"]
+ENTRYPOINT ["./run.sh"]
 
