@@ -10,14 +10,14 @@ if [ "${PWD##*/}" = "scripts" ]; then
     cd ..
 fi
 
-# This script assumes that all three cloned repositories have the same parent folder,
-# i.e. the repository folders named "ReproducibilityPackage", "quantum-rl" and "plot_rl_vqc_data" are present in the same folder.
+# This script assumes that both repositories have the same parent folder,
+# i.e. the repository folders named "ReproducibilityPackage" and "quantum-rl" are present in the same folder.
 
 cd ../quantum-rl
 
 # cleaning up prior skolik or lockwood runs, but not both
 rm -r -f logs/tfq.reproduction."$1".*
-rm -r -f ../plot_rl_vqc_data/quantum-rl/logs/tfq.reproduction."$1".*
+rm -r -f data/logs/tfq.reproduction."$1".*
 rm -r -f ../ReproducibilityPackage/data/tfq.reproduction."$1".*
 
 configStringStart=tfq.reproduction."$1".cartpole.skolik_hyper
@@ -36,16 +36,12 @@ for extraction in "gs" "gsp" "ls"; do
     done
 done
 
-printf "\n\n\nfinished the trainings, now converting to .csv files ...\n"
-
-cd ../plot_rl_vqc_data
-
 # convert all freshly generated training results to .csv files
-printf "\n\n\ngenerating .csv files from data ...\n\n\n\n"
-python3 get_csv.py ../quantum-rl/logs/ parent
+printf "\n\n\nfinished the trainings, now converting to .csv files ...\n"
+python3 plot/get_csv.py logs/ parent
 
 # copy the .csv files into our data folder
 cd ../ReproducibilityPackage
-cp ../plot_rl_vqc_data/quantum-rl/logs/tfq.reproduction."$1".* data/
+cp ../quantum-rl/data/logs/tfq.reproduction."$1".* data/
 
 printf "\n\n\nfinished all "$1" trainings.\n\n\n\n"
