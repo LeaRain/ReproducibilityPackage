@@ -62,5 +62,5 @@ WORKDIR /home/repro/ReproducibilityPackage
 USER repro
 
 # default to run all trainings and then generate everything
-CMD ["./run_all_generate_all"]
-
+ENTRYPOINT ["./run.sh"]
+CMD ["true"]
