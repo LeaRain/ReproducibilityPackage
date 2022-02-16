@@ -21,8 +21,8 @@ FROM tensorflow/tensorflow:2.4.1 AS version-base-without-gpu
 
 
 # --------------------------------------------------------------------------------
-# operations needed regardless of gpu presence
-FROM version-base-${has_gpu} AS base
+# actual build operations
+FROM version-base-${has_gpu} AS final
 
 # MAINTAINER will be deprecated, so let's use LABEL
 LABEL authors="Lea Laux <lea.laux@st.oth-regensburg.de>, Martin Meilinger <martin.meilinger@st.oth-regensburg.de>"
@@ -32,22 +32,16 @@ RUN useradd -m -G sudo -s /bin/bash repro && echo "repro:repro" | chpasswd
 RUN usermod -a -G staff repro
 WORKDIR /home/repro
 
-# copy the files into the image/container
+# copy the files
 COPY --chown=repro:repro . /home/repro/ReproducibilityPackage
 
-# clone the repository of Franz et al.
-RUN git clone https://github.com/lfd/quantum-rl.git
-
-# install required packages
-RUN python -m pip install --upgrade pip
-RUN pip3 install -r quantum-rl/requirements.txt
-
-# install R and R-packages for plotting, as well as LaTeX packages
+# install git for cloning quantum-rl, as well as Python and LaTeX packages
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y \
         build-essential \
-        r-base \
+        git \
+        python \
         texlive \
         texlive-bibtex-extra \
         texlive-latex-base \
@@ -55,35 +49,14 @@ RUN apt-get update && \
         texlive-latex-recommended \
         texlive-luatex \
         texlive-pictures \
-        texlive-publishers \
-        libcurl4-gnutls-dev \
-        libssl-dev \
-        libxml2-dev
-RUN R -e "install.packages('ggplot2')"
-RUN R -e "install.packages('tikzDevice')"
-RUN R -e "install.packages('devtools')"
+        texlive-publishers
 
+# clone the repository of Franz et al.
+RUN git clone https://github.com/lfd/quantum-rl.git
 
-
-# --------------------------------------------------------------------------------
-# one more operation for gpu-based image
-FROM base AS final-with-gpu
-
-RUN R -e "devtools::install_github('teunbrand/ggh4x')"
-
-
-
-# --------------------------------------------------------------------------------
-# one more operation for cpu-based image
-FROM base AS final-without-gpu
-
-RUN R -e "devtools::install_version('ggh4x', '0.1.2.1')"
-
-
-
-# --------------------------------------------------------------------------------
-# final image
-FROM final-${has_gpu} AS final
+# install required packages
+RUN python3 -m pip install --upgrade pip
+RUN pip3 install -r quantum-rl/requirements.txt
 
 WORKDIR /home/repro/ReproducibilityPackage
 USER repro
