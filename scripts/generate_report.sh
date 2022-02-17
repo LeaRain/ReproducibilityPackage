@@ -12,8 +12,6 @@ bibtex main
 lualatex main.tex
 lualatex main.tex
 
-mv main.pdf ../
+mv main.pdf ../report.pdf
 
 cd ..
-
-mv main.pdf report.pdf
