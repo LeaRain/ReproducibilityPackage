@@ -9,20 +9,19 @@ Q-learning can be applied to quantum computing as well.
 The proposed strategy for this research is the usage of \ac{VQ-DQN} described by Chen et al., so classical deep \ac{RL} algorithms for von Neumann architectures have a quantum computing representation.\autocite{vqdqn}
 For this purpose, variational quantum circuits are used to create a quantum equivalent of deep Q-learning.
 Quantum deep Q-networks replace the classical neural network with variational quantum circuits.
-Those circuits follow the design of a fixed structure of gates, operating on a set of qubits.\autocite{circuits}
+The circuits follow the design of a fixed structure of gates, operating on a set of qubits.\autocite{circuits}
 
 
 For the usage of \ac{VQ-DQN}, it is necessary to map a state of the classical markov decision process to a quantum state by the usage of the qubits in the variational quantum circuit. 
 Lockwood and Si use Scaled encoding and Directional encoding.\autocite{lockwood}
 Skolik et al. add Continuous encoding to the possible options.\autocite{skolik} 
-The different encoding strategies describe different rotation policies for the specific qubits.
+The different encoding strategies describe different rotation policies for the specific qubits in the mapping of classical input to the quantum representation.
 
 
-Based on the research and reproduction study of Franz et al., we reconstruct the reproduced training process of Lockwood and Si and Skolik et al. regarding the training of \ac{VQ-DQN} agents on the CartPole task. 
+Based on the research of Franz et al., we reconstruct the reproduced training process of Lockwood and Si and Skolik et al. regarding the training of \ac{VQ-DQN} agents on the CartPole task. 
 We use the approaches of Continuous (continuous for all input parameters), Scaled \& Continuous (scaled for finite-domain input parameters, continuous for rest) and Scaled \& Directional (scaled for finite-domain input parameters, directional for rest) encoding. 
 For the Q-value extraction methods, we use Local Scaling (scaling of the output by a dedicated trainable weight), Global Scaling (scaling of all outputs by one trainable weight) and Global Scaling with Quantum Pooling (quantum pooling, followed by global scaling) like described by Franz et al.
-The results can be found in Figure \ref{results}: For every extraction strategy, every encoding is used for five runs per combination.
-The validation return is averaged over those five runs.
+The results can be found in Figure \ref{results}: For every extraction strategy, every encoding is used for five runs per combination with averaged validation return over them.
 
 \begin{figure*}[tb]
 \centering
@@ -32,5 +31,5 @@ The validation return is averaged over those five runs.
 \end{figure*}
 
 The result of the reproducibility experiments of Franz et al. show instabilities in every run, independent of the structure, encoding and extraction method. 
-So it is no surprise that we are not able to reproduce the exact same results, which also applies to the original results.
+So it is expectable that we are not able to reproduce the exact same results, which also applies to the original results.
 In fact, we reproduce that we cannot reproduce the same results, which is also the observation of Franz et al. 

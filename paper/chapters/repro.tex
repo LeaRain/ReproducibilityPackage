@@ -1,21 +1,21 @@
 Since the research by Franz et al. itself uncovers instabilities in the usage of \ac{VQ-DQN}, the aim of reproducing the exact same results presented there, even with the usage of our reproducibility package, is limited. 
 However, both the realms of \ac{RL}\autocite{rlrepro} and quantum computing\autocite{quantumrepro} have their own issues with reproducibility, even when considered separately. 
 So it lies in the nature of the topic that it is hard to define exact reproducibility criteria.
-Our data is not the same as Franz et al., Lockwood and Si or Skolik et al. are able to acquire and further trainings of the agents, for example during the usage of our package, will produce different validation returns.
+Our data is not the same as Franz et al., Lockwood and Si or Skolik et al. are able to acquire and further trainings of the agents will produce different validation returns.
 
 
-Our reproducibility package consists of three different stages: The first one is responsible for the training, the second evaluates the data and generates a figure similar to Figure \ref{results} and the third produces the paper. 
+Our reproducibility package consists of three different stages: The first is responsible for the training, the second evaluates the data and generates a figure similar to Figure \ref{results} and the third produces the paper. 
 
 There are different base images for a docker container based on the availability of a GPU. 
 The training process uses tensorflow and the availability of a GPU can speed up the process. 
 The initial setup uses a GPU and therefore benefits from the resulting optimizations and performance.
 The base images for the GPU version and the CPU version are also different: The GPU image is an official NVIDIA image and as a consequence, the resulting container contains optimizations for speedups and performance. 
-It is also notable that the base image contains proprietary software like CUDA, which is an inconsistency for the requirement of non-proprietary artifacts, but under the current circumstances in the GPU market, this software is without any alternative.
-But it is still possible to use and reproduce the experiment without proprietary software provided by NVIDIA with the CPU based tensorflow image.
+The base image contains proprietary software like CUDA, which is an inconsistency for the requirement of non-proprietary artifacts, but under the current circumstances in the GPU market, this software is without any alternative.
+But it is still possible to use and reproduce the experiment with the CPU based tensorflow image.
 Another limitation lies in the hardware requirements for training. 
 Our results are produced with a setup containing two AMD EPYC 7662 processors with 64 cores as CPUs, NVIDIA A100 SXM4 40 GB as GPU and 1 TiB of RAM and one run takes approximately one hour. 
-Such a setup is not available for everyone who may want to reproduce a part of the experiments like evaluating the data. 
-Therefore, we make it possible to skip the training and deliver our own data in the reproduction package, so the remaining part can be reconstructed without meeting our hardware requirements or the usage of an NVIDIA GPU. 
+A similar setup is not available for everyone.
+Therefore, we make it possible to skip the training and deliver our own data in the reproduction package, so the remaining part can be reconstructed without meeting our hardware requirements. 
 
 We also decided to reproduce Figure \ref{results} with Python, pandas and matplotlib instead of R to keep one programming language and one ecosystem. 
 
