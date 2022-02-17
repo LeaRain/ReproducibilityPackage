@@ -1,6 +1,9 @@
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.lines as mlines
+import matplotlib as mpl
+from matplotlib.ticker import AutoMinorLocator
 
 # Define global parameters for further usage
 data = pd.DataFrame(columns=["step", "value", "structure", "extraction", "encoding", "run"])
@@ -20,10 +23,12 @@ colors = {c_enc: "#D81B60",
 
 
 def read_csv_data(file_path):
-    files = os.listdir(file_path)
+    """
+    Get all files in the given path, check them for a ".csv" as file ending and use the function for adding them to the
+    global data frame -> load all the data
+    """
 
-    for file in files:
-        add_csv_data_to_data_frame(os.path.join(file_path, file))
+    [add_csv_data_to_data_frame(os.path.join(file_path, file)) for file in os.listdir(file_path) if ".csv" in file]
 
 
 def add_csv_data_to_data_frame(file_path):
@@ -76,12 +81,49 @@ def add_csv_data_to_data_frame(file_path):
 
 
 def plot_data():
+    """
+    Use the data frame and plot all the data in one figure with six different subplots: 2 different structures and 3
+    different extraction methods.
+    """
+
+    figure, axes = plt.subplots(2, 3)
+    # Count the rows and columns for adding the correct subplot at the right position.
+    row_count = 0
+    column_count = 0
+
     for structure in [lockwood, skolik]:
         for extraction in [gs, gsp, ls]:
-            plot_data_for_structure_and_extraction(structure, extraction)
+            # Get the correct subplot.
+            ax = axes[row_count][column_count]
+            plot_data_for_structure_and_extraction(structure, extraction, ax)
+            column_count += 1
+
+            # Add the column title.
+            if row_count == 0:
+                ax.set_title(extraction, fontsize=14)
+
+            # Add the row title.
+            if column_count == 3:
+                # Use the right side of the plot for the row title.
+                ax_right = ax.twinx()
+                ax_right.set_ylabel(structure, fontsize=14)
+
+        row_count += 1
+        column_count = 0
+
+    # Prepare the legend for the different encoding values.
+    legend_lines = []
+    for color_value in colors.values():
+        line = mlines.Line2D([], [], color=color_value)
+        legend_lines.append(line)
+    figure.legend(legend_lines, list(colors.keys()), loc="upper center", ncol=3, title="Encoding")
+
+    figure.supxlabel("Steps")
+    figure.supylabel("Validation Return")
+    plt.show()
 
 
-def plot_data_for_structure_and_extraction(structure, extraction):
+def plot_data_for_structure_and_extraction(structure, extraction, ax):
     """
     Plot the data for one given structure and extraction: The plot contains five different runs and a summary of those
     five runs per encoding.
@@ -96,11 +138,22 @@ def plot_data_for_structure_and_extraction(structure, extraction):
     for encoding in [c_enc, sc_enc, sd_enc]:
         # Plot the five runs.
         encoding_data = extract_encoding_data(structure_extraction_data, encoding)
-        plt.plot(encoding_data, color=colors[encoding], alpha=0.1)
-        if not mean_data.empty:
-            plt.plot(mean_data[encoding], color=colors[encoding])
+        ax.plot(encoding_data, color=colors[encoding], alpha=0.1)
 
-    plt.show()
+        if not mean_data.empty:
+            ax.plot(mean_data[encoding], color=colors[encoding])
+
+        # Modify the labels on the x-axis to K for thousands.
+        ax.xaxis.set_major_formatter(mpl.ticker.FuncFormatter(
+            lambda step, position: "{:}K".format(int(round(step/1000)))))
+
+        # Modify the grid: Gray background, white lines.
+        ax.grid(which="major", color="#FFFFFF", linewidth=1.0)
+        ax.grid(which="minor", color="#FFFFFF", linewidth=0.5)
+        ax.minorticks_on()
+        ax.xaxis.set_minor_locator(AutoMinorLocator(2))
+        ax.yaxis.set_minor_locator(AutoMinorLocator(2))
+        ax.set_facecolor("#EBEBEB")
 
 
 def extract_encoding_data(extraction_data, encoding):
