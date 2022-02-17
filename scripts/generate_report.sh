@@ -15,3 +15,5 @@ lualatex main.tex
 mv main.pdf ../
 
 cd ..
+
+mv main.pdf report.pdf
