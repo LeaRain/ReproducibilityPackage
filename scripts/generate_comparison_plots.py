@@ -1,3 +1,4 @@
+import sys
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -176,5 +177,8 @@ def extract_encoding_data(extraction_data, encoding):
 
 
 if __name__ == '__main__':
-    read_csv_data("../data")
+    if len(sys.argv) != 2:
+        exit("Usage: python generate_comparison_plots.py <path_to_csv_data>")
+
+    read_csv_data(sys.argv[1])
     plot_data()

@@ -5,4 +5,9 @@ if [ "${PWD##*/}" = "scripts" ]; then
     cd ..
 fi
 
-echo "TODO: generate plot from .csv files by calling a Python script"
+cd scripts
+
+python generate_comparison_plots.py ../data
+mv comparison.pgf ../paper/
+
+cd ..
