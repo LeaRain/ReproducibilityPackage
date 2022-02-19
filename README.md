@@ -7,12 +7,34 @@ The team consists of Lea Laux and Martin Meilinger.
 
 ## Usage
 
-Run all trainings and generate both the plot and the report:
+Our Dockerfile offers two ways of building an image of it: with or without GPU.
+To build the image with a GPU present, run:
 ``
-./run_all_generate_all.sh
+docker build -t repro_gpu --build-arg has_gpu=with-gpu .
+``
+To build the image without the usage of a GPU, therefore CPU only, run:
+``
+docker build -t repro_cpu --build-arg has_gpu=without-gpu .
 ``
 
-Only generate the plot and report, without running the trainings:
+
+After building the image, you can decide whether to run all trainings and then generate our report or only the latter.
+To create a container that will run all trainings and then generate our report, run:
+(with GPU)
 ``
-./generate_all.sh
+docker run --name repro_gpu_all -it --runtime=nvidia repro_gpu true
+``
+(without GPU, so CPU only)
+``
+docker run --name repro_cpu_all -it repro_cpu true
+``
+
+To create a container that only generates our report, run:
+(with GPU)
+``
+docker run --name repro_gpu_report -it --runtime=nvidia repro_gpu false
+``
+(without GPU, so CPU only)
+``
+docker run --name repro_cpu_report -it repro_cpu false
 ``
