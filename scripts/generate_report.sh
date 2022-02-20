@@ -7,10 +7,10 @@ fi
 
 cd paper/
 
-lualatex main.tex
+lualatex -interaction nonstopmode main.tex
 bibtex main
-lualatex main.tex
-lualatex main.tex
+lualatex -interaction nonstopmode main.tex
+lualatex -interaction nonstopmode main.tex
 
 mv main.pdf ../report.pdf
 
