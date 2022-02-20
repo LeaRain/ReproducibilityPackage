@@ -54,6 +54,8 @@ RUN apt-get update && \
 # clone the repository of Franz et al.
 RUN git clone https://github.com/lfd/quantum-rl.git
 
+RUN chown -R repro ./quantum-rl/
+
 # install required packages
 RUN python3 -m pip install --upgrade pip
 RUN pip3 install -r quantum-rl/requirements.txt
