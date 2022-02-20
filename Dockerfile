@@ -41,7 +41,7 @@ RUN apt-get update && \
     apt-get install -y \
         build-essential \
         git \
-        python \
+        python3.7 \
         texlive \
         texlive-bibtex-extra \
         texlive-latex-base \
@@ -49,7 +49,7 @@ RUN apt-get update && \
         texlive-latex-recommended \
         texlive-luatex \
         texlive-pictures \
-        texlive-publishers
+        texlive-publishers 
 
 # clone the repository of Franz et al.
 RUN git clone https://github.com/lfd/quantum-rl.git
@@ -59,6 +59,9 @@ RUN chown -R repro ./quantum-rl/
 # install required packages
 RUN python3 -m pip install --upgrade pip
 RUN pip3 install -r quantum-rl/requirements.txt
+
+RUN python3.7 -m pip install --upgrade pip
+RUN python3.7 -m pip install -r ReproducibilityPackage/plot_requirements.txt
 
 WORKDIR /home/repro/ReproducibilityPackage
 USER repro
