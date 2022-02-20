@@ -34,14 +34,16 @@ WORKDIR /home/repro
 
 # copy the files
 COPY --chown=repro:repro . /home/repro/ReproducibilityPackage
+ARG has_gpu
+COPY --chown=repro:repro ./scripts/generate_plot-${has_gpu}.sh /home/repro/ReproducibilityPackage/scripts/generate_plot.sh
 
 # install git for cloning quantum-rl, as well as Python and LaTeX packages
 ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && \
     apt-get install -y \
         build-essential \
         git \
-        python3.7 \
         texlive \
         texlive-bibtex-extra \
         texlive-latex-base \
@@ -50,6 +52,11 @@ RUN apt-get update && \
         texlive-luatex \
         texlive-pictures \
         texlive-publishers 
+
+
+ARG has_gpu
+RUN if [ "$has_gpu" = "without-gpu" ] ; then apt-get install -y python3.7 ; fi
+
 
 # clone the repository of Franz et al.
 RUN git clone https://github.com/lfd/quantum-rl.git
@@ -60,8 +67,8 @@ RUN chown -R repro ./quantum-rl/
 RUN python3 -m pip install --upgrade pip
 RUN pip3 install -r quantum-rl/requirements.txt
 
-RUN python3.7 -m pip install --upgrade pip
-RUN python3.7 -m pip install -r ReproducibilityPackage/plot_requirements.txt
+RUN if [ "$has_gpu" = "without-gpu" ] ; then python3.7 -m pip install --upgrade pip ; fi
+RUN if [ "$has_gpu" = "without-gpu" ] ; then python3.7 -m pip install -r ReproducibilityPackage/plot_requirements.txt ; fi
 
 WORKDIR /home/repro/ReproducibilityPackage
 USER repro
@@ -69,3 +76,4 @@ USER repro
 # default to run all trainings and then generate everything
 ENTRYPOINT ["./run.sh"]
 CMD ["true"]
+
